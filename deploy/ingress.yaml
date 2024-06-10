@@ -1,0 +1,17 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: bookish-bliss-ingress
+  namespace: bookish-bliss
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`vertiavo.dev`)
+      kind: Rule
+      services:
+        - name: bookish-bliss-service
+          port: 80
+  tls:
+    certResolver: letsencrypt-prod
