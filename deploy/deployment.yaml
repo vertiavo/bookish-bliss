@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bookish-bliss-deployment
+  namespace: bookish-bliss
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bookish-bliss
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 1
+      maxSurge: 1
+  template:
+    metadata:
+      labels:
+        app: bookish-bliss
+    spec:
+      containers:
+        - name: bookish-bliss
+          image: ghcr.io/vertiavo/bookish-bliss:latest
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: github-container-registry
